@@ -27,8 +27,8 @@ module.exports = base.createChild().addInstanceMethods({
         return cb(err);
       }
       function callback(err, data){
-        console.log('callback1:', err, self);
-        cb(err);
+        console.log('call:', err, data);
+        cb(err, data);
       }
       async.each(_.keys(self.collections), function (key, next) {
         self.loadDB(key, next);
@@ -51,9 +51,6 @@ module.exports = base.createChild().addInstanceMethods({
 
         var dbself = this,
           def = _.clone(collection.definition);
-
-        console.log("equal: ", self.dbs[collectionID] === dbself);
-
 
         async.waterfall([
 

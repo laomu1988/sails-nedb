@@ -1,8 +1,8 @@
 /**
  * Module Dependencies
  */
-var Connection = require('./connection'),
-// var Connection = require('./con2'),
+// var Connection = require('./connection'),
+var Connection = require('./con2'),
   Errors = require('waterline-errors').adapter;
 
 module.exports = (function () {
