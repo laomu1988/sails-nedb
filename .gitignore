@@ -9,3 +9,5 @@ nbproject
 npm-debug.log
 *.sublime-*
 .tmp
+log.txt
+waterline-adapter-tests

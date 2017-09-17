@@ -84,26 +84,26 @@ module.exports = base.createChild().addInstanceMethods({
             }
           },
           function (next) {
-            dbself.ensureIndex({
-              fieldName: '__ctr',
-              unique: true
-            }, next);
-          },
-          function (next) {
-            var group = {
-              reduce: function (curr, result) {
-                if (curr.__ctr > result.ctr) {
-                  result.ctr = curr.__ctr;
-                }
-              },
-              initial: {
-                ctr: 0
-              }
-            };
-            dbself.find({}).group(group).exec(next);
+          //   dbself.ensureIndex({
+          //     fieldName: '__ctr',
+          //     unique: true
+          //   }, next);
+          // },
+          // function (next) {
+          //   var group = {
+          //     reduce: function (curr, result) {
+          //       if (curr.__ctr > result.ctr) {
+          //         result.ctr = curr.__ctr;
+          //       }
+          //     },
+          //     initial: {
+          //       ctr: 0
+          //     }
+          //   };
+            dbself.find({}).exec(next);
           },
           function (res, next) {
-            dbself.ctr = res[0].ctr;
+            // dbself.ctr = res[0].ctr;
             self.collections[collectionID].schema = def;
             next(null, def);
           }
@@ -150,8 +150,40 @@ module.exports = base.createChild().addInstanceMethods({
 
     // Catch errors from building query and return to the callback
     try {
+      console.log('criteria00:', criteria);
+      // 修复时间格式问题
+      let schema = this.collections[coll].schema;
+      let where = criteria.where;
+      // console.log('schema:', schema);
+      for(var key in where) {
+        // console.log('schema attr:', schema[key], key);
+        
+        
+        if(schema[key] && (schema[key].type === 'date' || schema[key].type === 'datetime')) {
+          let date = where[key];
+          if(typeof date === 'string') {
+            date = str2date(date);
+          } else if(date + '' === '[object Object]') {
+            for(var attr in date) {
+              if(typeof date[attr] === 'string') {
+                date[attr] = str2date(date[attr]);
+              }
+            }
+          }
+          where[key] = date;
+        }
+      }
+
+      function str2date(str) {
+        let date = new Date(str);
+        let time = date.getTime() + date.getTimezoneOffset() * 60 * 1000;
+        return new Date(time);
+      }
+
+      console.log('criteria1:', criteria);
       query = new Query(criteria);
     } catch (err) {
+      console.log('err1:', err);
       return cb(err);
     }
 
@@ -161,16 +193,16 @@ module.exports = base.createChild().addInstanceMethods({
     // Run Normal Query on collection
     var cursor = this.dbs[coll].find(where);
 
-    if (query.aggregate) {
-      cursor.group(query.aggregateGroup);
-    }
+    // if (query.aggregate) {
+    //   cursor.group(query.aggregateGroup);
+    // }
 
     if (queryOptions.sort) {
       cursor.sort(queryOptions.sort);
     } else {
-      cursor.sort({
-        __ctr: 1
-      });
+      // cursor.sort({
+      //   __ctr: 1
+      // });
     }
 
     if (queryOptions.skip) {
@@ -181,6 +213,24 @@ module.exports = base.createChild().addInstanceMethods({
     }
 
     cursor.exec(function (err, docs) {
+      if (!err && criteria.average && criteria.average.$in &&  docs.length > 0 ) {
+        let average = criteria.average.$in;
+        console.log('average:', average);
+        let result = {};
+        average.forEach(key => {
+          result[key] = 0;
+        })
+        docs.forEach(doc => {
+          average.forEach(key => {
+            result[key] += doc[key];
+          })
+        })
+        average.forEach(key => {
+          result[key] /= docs.length;
+        })
+        console.log('result:', [result]);
+        return cb(err, [result]);
+      }
       cb(err, utils.rewriteIds(docs));
     });
 
@@ -191,14 +241,14 @@ module.exports = base.createChild().addInstanceMethods({
 
     delete data.id;
     delete data._id;
-    data.__ctr = ++db.ctr;
+    // data.__ctr = ++db.ctr;
 
     db.insert(data, function (err, result) {
       if (err) return cb(err);
 
       result.id = result._id;
       delete result._id;
-      delete result.__ctr;
+      // delete result.__ctr;
       cb(err, result);
     });
   },
@@ -209,7 +259,7 @@ module.exports = base.createChild().addInstanceMethods({
     _.each(values, function (data) {
       delete data.id;
       delete data._id;
-      data.__ctr = ++db.ctr;
+      // data.__ctr = ++db.ctr;
     });
 
     db.insert(values, function (err, result) {
@@ -269,9 +319,11 @@ module.exports = base.createChild().addInstanceMethods({
           _id: {
             '$in': updatedRecords
           }
-        }).sort({
-          __ctr: 1
         }).exec(next);
+        // .sort({
+        //   __ctr: 1
+        // })
+        
       }
     ], function (err, records) {
       if (err) return cb(err);

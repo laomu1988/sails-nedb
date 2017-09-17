@@ -1,8 +1,7 @@
 /**
  * Module Dependencies
  */
-// var Connection = require('./connection'),
-var Connection = require('./con2'),
+var Connection = require('./connection'),
   Errors = require('waterline-errors').adapter;
 
 module.exports = (function () {
@@ -58,6 +57,7 @@ module.exports = (function () {
     },
 
     create: function (conn, coll, values, cb) {
+      // console.log('create:', conn, coll, values, cb);
       grabConnection(conn).insert(coll, values, cb);
     },
 

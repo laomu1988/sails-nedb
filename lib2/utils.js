@@ -40,7 +40,7 @@ exports = module.exports = {
 
         delete model._id;
       }
-      delete model.__ctr;
+      // delete model.__ctr;
       return model;
     });
   }

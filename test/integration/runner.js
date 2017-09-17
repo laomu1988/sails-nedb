@@ -7,7 +7,7 @@ var log = new (require('captains-log'))();
 var rimraf = require('rimraf');
 
 
-var TestRunner = require('waterline-adapter-tests');
+var TestRunner = require('../../waterline-adapter-tests');
 var Adapter = require('../../');
 
 

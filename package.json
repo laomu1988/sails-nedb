@@ -5,7 +5,7 @@
   "main": "./lib/adapter.js",
   "scripts": {
     "test": "node test/integration/runner -R spec -b",
-    "test2": "node test/integration/runner2 -R spec -b",
+    "test2": "rm -rf log.txt && node test/integration/runner2 -R spec -b >> log.txt",
     "prepublish": "npm prune"
   },
   "repository": {
