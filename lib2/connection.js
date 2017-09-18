@@ -9,6 +9,7 @@ var base = require('base-framework'),
   Document = require('./document'),
   utils = require('./utils'),
   Errors = require('waterline-errors').adapter;
+var handleResult = require('./handleResult');
 
 module.exports = base.createChild().addInstanceMethods({
   init: function (config, collections) {
@@ -213,25 +214,9 @@ module.exports = base.createChild().addInstanceMethods({
     }
 
     cursor.exec(function (err, docs) {
-      if (!err && criteria.average && criteria.average.$in &&  docs.length > 0 ) {
-        let average = criteria.average.$in;
-        console.log('average:', average);
-        let result = {};
-        average.forEach(key => {
-          result[key] = 0;
-        })
-        docs.forEach(doc => {
-          average.forEach(key => {
-            result[key] += doc[key];
-          })
-        })
-        average.forEach(key => {
-          result[key] /= docs.length;
-        })
-        console.log('result:', [result]);
-        return cb(err, [result]);
-      }
-      cb(err, utils.rewriteIds(docs));
+      console.log('criteria.after.exec:', criteria);
+      if(err || !docs || docs.length === 0) return cb(err, docs);
+      return cb(null, handleResult(docs, criteria));
     });
 
   },
