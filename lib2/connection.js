@@ -151,15 +151,12 @@ module.exports = base.createChild().addInstanceMethods({
 
     // Catch errors from building query and return to the callback
     try {
-      console.log('criteria00:', criteria);
       // 修复时间格式问题
       let schema = this.collections[coll].schema;
       let where = criteria.where;
       // console.log('schema:', schema);
       for(var key in where) {
         // console.log('schema attr:', schema[key], key);
-        
-        
         if(schema[key] && (schema[key].type === 'date' || schema[key].type === 'datetime')) {
           let date = where[key];
           if(typeof date === 'string') {
@@ -181,10 +178,10 @@ module.exports = base.createChild().addInstanceMethods({
         return new Date(time);
       }
 
-      console.log('criteria1:', criteria);
+      // console.log('criteria1:', criteria);
       query = new Query(criteria);
     } catch (err) {
-      console.log('err1:', err);
+      // console.log('sails-nedb-connect-select:', err);
       return cb(err);
     }
 
@@ -214,7 +211,6 @@ module.exports = base.createChild().addInstanceMethods({
     }
 
     cursor.exec(function (err, docs) {
-      console.log('criteria.after.exec:', criteria);
       if(err || !docs || docs.length === 0) return cb(err, docs);
       return cb(null, handleResult(docs, criteria));
     });
