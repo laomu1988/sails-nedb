@@ -1,6 +1,6 @@
 {
   "name": "@laomu/sails-nedb",
-  "version": "0.10.1-a3",
+  "version": "0.11.0",
   "description": "NeDB adapter for Sails / Waterline - 0.10.x",
   "main": "./lib/adapter.js",
   "scripts": {
@@ -33,10 +33,11 @@
     "waterline-errors": "^0.10.0-rc1"
   },
   "devDependencies": {
-    "waterline-adapter-tests": "~0.10.0",
+    "captains-log": "~0.10.6",
     "mocha": "*",
     "root-require": "~0.2.0",
-    "captains-log": "~0.10.6"
+    "waterline": "^0.11.11",
+    "waterline-adapter-tests": "~0.10.0"
   },
   "sailsAdapter": {
     "sailsVersion": "~0.10.0",
