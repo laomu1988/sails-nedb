@@ -1,2 +1,0 @@
-{"hello":"world","n":5,"today":{"$$date":1505540695297},"nedbIsAwesome":true,"notthere":null,"fruits":["apple","orange","pear"],"infos":{"name":"nedb"},"_id":"jSYSRq5QWxK1HsoM"}
-{"$$indexCreated":{"fieldName":"n","unique":true,"sparse":false}}

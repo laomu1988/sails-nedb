@@ -1,5 +1,5 @@
 {
-  "name": "sails-nedb",
+  "name": "@laomu/sails-nedb",
   "version": "0.10.1-a3",
   "description": "NeDB adapter for Sails / Waterline - 0.10.x",
   "main": "./lib/adapter.js",
@@ -27,7 +27,7 @@
     "base-framework": "^1.0.1",
     "lodash": "^4.17.4",
     "mkdirp": "^0.3.5",
-    "nedb": "https://github.com/adityamukho/nedb/tarball/v0.11.1g",
+    "nedb": "^1.8.0",
     "pify": "^3.0.0",
     "rimraf": "^2.2.6",
     "waterline-errors": "^0.10.0-rc1"
