@@ -5,6 +5,7 @@
 ## update
 - 升级nedb版本
 - 修改数据时可以使用$inc
+- 修复sails-nedb中每次重启后id就改变的问题
 
 [![Npm Downloads](https://nodei.co/npm/sails-nedb.png?downloads=true&stars=true)](https://www.npmjs.org/package/sails-nedb)
 
