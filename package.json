@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/adityamukho/sails-nedb.git"
+    "url": "https://github.com/laomu1988/sails-nedb.git"
   },
   "keywords": [
     "nedb",
@@ -19,7 +19,7 @@
     "orm",
     "adapter"
   ],
-  "author": "Aditya Mukhopadhyay <webmaster@adityamukho.com>",
+  "author": "Aditya Mukhopadhyay <webmaster@adityamukho.com>, laomu1988<laomu1988@qq.com>",
   "license": "MIT",
   "readmeFilename": "README.md",
   "dependencies": {

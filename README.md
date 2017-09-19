@@ -1,6 +1,6 @@
 ![image_squidhome@2x.png](http://i.imgur.com/RIvu9.png)
 
-# NeDB Adapter [![Build Status](https://travis-ci.org/adityamukho/sails-nedb.svg?branch=master)](https://travis-ci.org/adityamukho/sails-nedb)
+# NeDB Adapter [![Build Status](https://travis-ci.org/laomu1988/sails-nedb.svg?branch=master)](https://travis-ci.org/laomu1988/sails-nedb)
 
 ## update
 - 升级nedb版本
@@ -21,7 +21,7 @@ In case you run multiple sails workers on a machine as part of a load balancing 
 Install from NPM.
 
 ```bash
-$ npm install sails-nedb --save
+$ npm install @laomu/sails-nedb --save
 ```
 
 The NeDB dependency is actually pulled from my forked repo of the original, because I needed to add aggregation support at the DB layer. If and when [this pull request](https://github.com/louischatriot/nedb/pull/153) gets merged into the main line, the dependendency will be switched back to the npm module.
