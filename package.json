@@ -1,6 +1,6 @@
 {
   "name": "@laomu/sails-nedb",
-  "version": "0.11.0",
+  "version": "0.11.1",
   "description": "NeDB adapter for Sails / Waterline - 0.10.x",
   "main": "./lib/adapter.js",
   "scripts": {
